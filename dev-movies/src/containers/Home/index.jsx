@@ -1,24 +1,33 @@
+import { useState, useEffect } from 'react'
 import Button from '../../components/Button'
 import Slider from '../../components/Slider'
 import api from '../../services/api'
 import { getImages } from '../../utils/getImages'
 import { Background, Container, ContainerButtons, Info, Poster } from './styles'
-import { useState, useEffect } from 'react'
 
 function Home() {
   const [movie, setMovie] = useState()
+  const [trending, setTrending] = useState([])
+  const [nowPlaying, setNowPlaying] = useState([])
   const [topMovies, setTopMovies] = useState([])
-  const [topSeries, setTopSeries] = useState([])
   const [popularSeries, setPopularSeries] = useState([])
-  const [topPeople, setTopPeople] = useState([])
 
   useEffect(() => {
-    async function getMovies() {
+    async function getTrending() {
       const {
         data: { results }
-      } = await api.get('/movie/popular')
+      } = await api.get('/trending/all/week')
 
-      setMovie(results[2])
+      setTrending(results)
+      setMovie(results[0])
+    }
+
+    async function getNowPlaying() {
+      const {
+        data: { results }
+      } = await api.get('/movie/now_playing')
+
+      setNowPlaying(results)
     }
 
     async function getTopMovies() {
@@ -29,14 +38,6 @@ function Home() {
       setTopMovies(results)
     }
 
-    async function getTopSeries() {
-      const {
-        data: { results }
-      } = await api.get('/tv/top_rated')
-
-      setTopSeries(results)
-    }
-
     async function getPopularSeries() {
       const {
         data: { results }
@@ -45,19 +46,10 @@ function Home() {
       setPopularSeries(results)
     }
 
-    async function getTopPeople() {
-      const {
-        data: { results }
-      } = await api.get('/person/popular')
-
-      setTopPeople(results)
-    }
-
-    getMovies()
+    getTrending()
+    getNowPlaying()
     getTopMovies()
-    getTopSeries()
     getPopularSeries()
-    getTopPeople()
   }, [])
 
   return (
@@ -66,7 +58,7 @@ function Home() {
         <Background img={getImages(movie.backdrop_path)}>
           <Container>
             <Info>
-              <h1>{movie.title}</h1>
+              <h1>{movie.title || movie.name}</h1>
               <p>{movie.overview}</p>
               <ContainerButtons>
                 <Button red>Assista Agora</Button>
@@ -74,17 +66,23 @@ function Home() {
               </ContainerButtons>
             </Info>
             <Poster>
-              <img alt="capa-do-filme" src={getImages(movie.poster_path)} />
+              <img alt="capa-do-destaque" src={getImages(movie.poster_path)} />
             </Poster>
           </Container>
         </Background>
       )}
-      {topMovies && <Slider info={topMovies} title={'Top Filmes'} />}
-      {topSeries && <Slider info={topSeries} title={'Top Séries'} />}
-      {popularSeries && (
+
+      {/* Nossos 4 novos carrosséis dinâmicos */}
+      {trending.length > 0 && (
+        <Slider info={trending} title={'Em Alta na Semana'} />
+      )}
+      {nowPlaying.length > 0 && (
+        <Slider info={nowPlaying} title={'Nos Cinemas'} />
+      )}
+      {topMovies.length > 0 && <Slider info={topMovies} title={'Top Filmes'} />}
+      {popularSeries.length > 0 && (
         <Slider info={popularSeries} title={'Séries Populares'} />
       )}
-      {topPeople && <Slider info={topPeople} title={'Atores Populares'} />}
     </>
   )
 }
