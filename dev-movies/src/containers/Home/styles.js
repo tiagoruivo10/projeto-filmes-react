@@ -37,7 +37,7 @@ export const Info = styled.div`
   width: 50%;
 
   h1 {
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: 700;
     color: #ffffff;
   }
@@ -48,6 +48,11 @@ export const Info = styled.div`
     color: #ffffff;
     margin-top: 30px;
     margin-bottom: 20px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 `
 

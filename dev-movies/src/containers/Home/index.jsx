@@ -28,7 +28,10 @@ function Home() {
       } = await api.get('/trending/all/week')
 
       setTrending(results)
-      setMovie(results[0])
+
+      const randomIndex = Math.floor(Math.random() * results.length)
+
+      setMovie(results[randomIndex])
     }
 
     async function getNowPlaying() {
