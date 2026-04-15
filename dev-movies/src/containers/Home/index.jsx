@@ -11,8 +11,10 @@ import {
   Poster,
   Wrapper
 } from './styles'
+import Modal from '../../components/Modal'
 
 function Home() {
+  const [showModal, setShowModal] = useState(false)
   const [movie, setMovie] = useState()
   const [trending, setTrending] = useState([])
   const [nowPlaying, setNowPlaying] = useState([])
@@ -63,13 +65,18 @@ function Home() {
     <Wrapper>
       {movie && (
         <Background img={getImages(movie.backdrop_path)}>
+          {showModal && (
+            <Modal movieId={movie.id} setShowModal={setShowModal} />
+          )}
           <Container>
             <Info>
               <h1>{movie.title || movie.name}</h1>
               <p>{movie.overview}</p>
               <ContainerButtons>
                 <Button red>Assista Agora</Button>
-                <Button>Assista o Trailer</Button>
+                <Button onClick={() => setShowModal(true)}>
+                  Assista o Trailer
+                </Button>
               </ContainerButtons>
             </Info>
             <Poster>
