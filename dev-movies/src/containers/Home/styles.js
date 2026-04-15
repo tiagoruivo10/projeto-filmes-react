@@ -24,10 +24,11 @@ export const Background = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
-  max-width: 1500px;
+  max-width: 1200px;
+  margin: 0 auto;
 `
 
 export const Info = styled.div`
@@ -54,8 +55,9 @@ export const Poster = styled.div`
   z-index: 2;
 
   img {
-    width: 400px;
+    width: 325px;
     border-radius: 30px;
+    margin-right: 70px;
   }
 `
 
@@ -63,4 +65,9 @@ export const ContainerButtons = styled.div`
   display: flex;
   gap: 20px;
   margin-top: 30px;
+`
+
+export const Wrapper = styled.div`
+  overflow-x: hidden;
+  width: 100%;
 `

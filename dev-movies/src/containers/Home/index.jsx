@@ -3,7 +3,14 @@ import Button from '../../components/Button'
 import Slider from '../../components/Slider'
 import api from '../../services/api'
 import { getImages } from '../../utils/getImages'
-import { Background, Container, ContainerButtons, Info, Poster } from './styles'
+import {
+  Background,
+  Container,
+  ContainerButtons,
+  Info,
+  Poster,
+  Wrapper
+} from './styles'
 
 function Home() {
   const [movie, setMovie] = useState()
@@ -53,7 +60,7 @@ function Home() {
   }, [])
 
   return (
-    <>
+    <Wrapper>
       {movie && (
         <Background img={getImages(movie.backdrop_path)}>
           <Container>
@@ -83,7 +90,7 @@ function Home() {
       {popularSeries.length > 0 && (
         <Slider info={popularSeries} title={'Séries Populares'} />
       )}
-    </>
+    </Wrapper>
   )
 }
 
