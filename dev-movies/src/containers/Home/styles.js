@@ -5,9 +5,11 @@ export const Background = styled.div`
   height: 100vh;
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   &::before {
     content: '';
