@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Container, Background } from './styles'
+import { Container, Background, CloseButton } from './styles'
 import api from '../../services/api'
 
 function Modal({ movieId, setShowModal }) {
@@ -55,8 +55,11 @@ function Modal({ movieId, setShowModal }) {
   return (
     <Background onClick={() => setShowModal(false)}>
       {movie && (
-        <Container onClick={(e) => e.stopPropagation()}> 
+        <Container onClick={(e) => e.stopPropagation()}>
           {/* O e.stopPropagation() evita que clicar no vídeo feche o modal */}
+
+          <CloseButton onClick={() => setShowModal(false)}>X</CloseButton>
+
           <iframe
             src={`https://www.youtube.com/embed/${movie.key}`}
             title="Youtube Video Player"

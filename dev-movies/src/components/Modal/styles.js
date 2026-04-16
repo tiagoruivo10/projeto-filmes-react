@@ -22,8 +22,26 @@ export const Container = styled.div`
   position: fixed;
   padding: 50px;
   max-width: 1200px;
+  position: relative;
 
   iframe {
     border: none;
+  }
+`
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: #ff0000;
   }
 `
