@@ -69,7 +69,14 @@ function Home() {
               <h1>{movie.title || movie.name}</h1>
               <p>{movie.overview}</p>
               <ContainerButtons>
-                <Button red onClick={() => navigate(`/detalhe/${movie.id}`)}>
+                <Button
+                  red
+                  onClick={() =>
+                    navigate(
+                      `/detalhe/${movie.media_type || (movie.name ? 'tv' : 'movie')}/${movie.id}`
+                    )
+                  }
+                >
                   Assista Agora
                 </Button>
                 <Button onClick={() => setShowModal(true)}>

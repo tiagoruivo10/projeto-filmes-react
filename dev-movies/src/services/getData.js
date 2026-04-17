@@ -32,29 +32,32 @@ export async function getPopularSeries() {
   return results
 }
 
-export async function getMovieVideos(movieId) {
-  try {
-    let videoData = null
+export async function getMovieVideos(movieId, type) {
+  const {
+    data: { results }
+  } = await api.get(`/${type}/${movieId}/videos`)
 
-    try {
-      const { data } = await api.get(`/movie/${movieId}/videos`)
-      videoData = data.results
-    } catch {
-      // Se der erro, não faz nada e passa para a próxima
-    }
+  return results
+}
 
-    if (!videoData || videoData.length === 0) {
-      try {
-        const { data } = await api.get(`/tv/${movieId}/videos`)
-        videoData = data.results
-      } catch (error) {
-        console.error('Erro ao buscar vídeos da série:', error)
-      }
-    }
+export async function getMovieCredits(movieId, type) {
+  const {
+    data: { cast }
+  } = await api.get(`/${type}/${movieId}/credits`)
 
-    return videoData || []
-  } catch (error) {
-    console.error('Erro geral ao buscar vídeos:', error)
-    return []
-  }
+  return cast
+}
+
+export async function getMovieSimilar(movieId, type) {
+  const {
+    data: { results }
+  } = await api.get(`/${type}/${movieId}/similar`)
+
+  return results
+}
+
+export async function getMovieById(movieId, type) {
+  const { data } = await api.get(`/${type}/${movieId}`)
+
+  return data
 }

@@ -1,4 +1,13 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const scale = keyframes`
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+`
 
 export const Background = styled.div`
   background-image: url(${(props) => props.img});
@@ -63,6 +72,8 @@ export const Poster = styled.div`
     width: 325px;
     border-radius: 30px;
     margin-right: 70px;
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+    animation: ${scale} 0.5s linear;
   }
 `
 
