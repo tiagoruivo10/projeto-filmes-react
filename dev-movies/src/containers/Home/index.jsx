@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
+
+import { useNavigate } from 'react-router-dom'
+
 import Button from '../../components/Button'
 import Slider from '../../components/Slider'
-import api from '../../services/api'
 import { getImages } from '../../utils/getImages'
 import {
   Background,
@@ -12,6 +14,12 @@ import {
   Wrapper
 } from './styles'
 import Modal from '../../components/Modal'
+import {
+  getNowPlaying,
+  getPopularSeries,
+  getTopMovies,
+  getTrending
+} from '../../services/getData'
 
 function Home() {
   const [showModal, setShowModal] = useState(false)
@@ -20,48 +28,33 @@ function Home() {
   const [nowPlaying, setNowPlaying] = useState([])
   const [topMovies, setTopMovies] = useState([])
   const [popularSeries, setPopularSeries] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
-    async function getTrending() {
-      const {
-        data: { results }
-      } = await api.get('/trending/all/week')
+    async function getAllData() {
+      try {
+        const [trendingData, nowPlayingData, topMoviesData, popularSeriesData] =
+          await Promise.all([
+            getTrending(),
+            getNowPlaying(),
+            getTopMovies(),
+            getPopularSeries()
+          ])
 
-      setTrending(results)
+        const randomIndex = Math.floor(Math.random() * trendingData.length)
+        setMovie(trendingData[randomIndex])
 
-      const randomIndex = Math.floor(Math.random() * results.length)
-
-      setMovie(results[randomIndex])
+        // 2. Preenchendo os carrosséis
+        setTrending(trendingData)
+        setNowPlaying(nowPlayingData)
+        setTopMovies(topMoviesData)
+        setPopularSeries(popularSeriesData)
+      } catch (error) {
+        console.error('Erro ao carregar os dados:', error)
+      }
     }
 
-    async function getNowPlaying() {
-      const {
-        data: { results }
-      } = await api.get('/movie/now_playing')
-
-      setNowPlaying(results)
-    }
-
-    async function getTopMovies() {
-      const {
-        data: { results }
-      } = await api.get('/movie/top_rated')
-
-      setTopMovies(results)
-    }
-
-    async function getPopularSeries() {
-      const {
-        data: { results }
-      } = await api.get('/tv/popular')
-
-      setPopularSeries(results)
-    }
-
-    getTrending()
-    getNowPlaying()
-    getTopMovies()
-    getPopularSeries()
+    getAllData()
   }, [])
 
   return (
@@ -76,7 +69,9 @@ function Home() {
               <h1>{movie.title || movie.name}</h1>
               <p>{movie.overview}</p>
               <ContainerButtons>
-                <Button red>Assista Agora</Button>
+                <Button red onClick={() => navigate(`/detalhe/${movie.id}`)}>
+                  Assista Agora
+                </Button>
                 <Button onClick={() => setShowModal(true)}>
                   Assista o Trailer
                 </Button>
