@@ -62,7 +62,11 @@ function Home() {
       {movie && (
         <Background img={getImages(movie.backdrop_path)}>
           {showModal && (
-            <Modal movieId={movie.id} setShowModal={setShowModal} />
+            <Modal
+              movieId={movie.id}
+              type={movie.media_type || (movie.name ? 'tv' : 'movie')}
+              setShowModal={setShowModal}
+            />
           )}
           <Container>
             <Info>

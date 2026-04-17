@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { Container, Background, CloseButton } from './styles'
 import { getMovieVideos } from '../../services/getData'
 
-function Modal({ movieId, setShowModal }) {
+function Modal({ movieId, type, setShowModal }) {
   const [movie, setMovie] = useState()
 
   useEffect(() => {
     async function fetchVideos() {
-      const results = await getMovieVideos(movieId)
+      const results = await getMovieVideos(movieId, type)
 
       if (results.length === 0) return
 
@@ -24,7 +24,7 @@ function Modal({ movieId, setShowModal }) {
     }
 
     fetchVideos()
-  }, [movieId])
+  }, [movieId, type])
 
   return (
     <Background onClick={() => setShowModal(false)}>

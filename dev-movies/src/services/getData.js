@@ -61,3 +61,24 @@ export async function getMovieById(movieId, type) {
 
   return data
 }
+
+// 1. Puxa os botões de categorias (Ação, Terror, Romance...)
+export async function getGenres(type) {
+  const {
+    data: { genres }
+  } = await api.get(`/genre/${type}/list`)
+
+  return genres
+}
+
+// 2. O Motor de Busca: Puxa os títulos filtrados por Gênero e por Página!
+export async function getItemsByGenre(type, genreId, page = 1) {
+  // Se o usuário clicou num gênero, adicionamos na URL. Se não, busca tudo misturado.
+  const genreQuery = genreId ? `&with_genres=${genreId}` : ''
+
+  const {
+    data: { results }
+  } = await api.get(`/discover/${type}?page=${page}${genreQuery}`)
+
+  return results
+}
