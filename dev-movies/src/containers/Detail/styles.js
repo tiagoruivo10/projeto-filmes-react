@@ -1,18 +1,14 @@
 import styled, { keyframes } from 'styled-components'
 
 const scale = keyframes`
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
 `
 
 export const Background = styled.div`
   background-image: url(${(props) => props.image});
   height: 50vh;
-  background-position: center;
+  background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -36,23 +32,36 @@ export const Background = styled.div`
     height: 120px;
     background-image: linear-gradient(to top, #0f0f0f, rgba(0, 0, 0, 0));
   }
+
+  @media (max-width: 768px) {
+    height: 35vh;
+  }
 `
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 100%;
   max-width: 1500px;
-  margin-top: -100px;
+  margin: -100px auto 0;
+  padding: 0 40px;
+  gap: 30px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+    margin-top: -60px;
+    gap: 20px;
+  }
 `
 
 export const Cover = styled.div`
-  padding: 20px;
+  padding: 20px 0;
   display: flex;
   align-items: flex-start;
-  height: 100%;
   z-index: 99;
+  flex-shrink: 0;
 
   img {
     width: 450px;
@@ -60,10 +69,24 @@ export const Cover = styled.div`
     box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
     animation: ${scale} 0.5s linear;
   }
+
+  @media (max-width: 1024px) {
+    img {
+      width: 240px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px 0;
+    img {
+      width: 160px;
+      border-radius: 16px;
+    }
+  }
 `
 
 export const Info = styled.div`
-  padding: 20px;
+  padding: 20px 0;
   width: 50%;
   z-index: 99;
   display: flex;
@@ -81,6 +104,25 @@ export const Info = styled.div`
     color: #ffffff;
     margin-top: 20px;
     margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+
+    h2 {
+      font-size: 26px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 22px;
+    }
   }
 `
 
@@ -89,7 +131,7 @@ export const ContainerMovies = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 20px 40px;
   width: 100%;
 
   div {
@@ -110,5 +152,16 @@ export const ContainerMovies = styled.div`
 
   iframe {
     border: none;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 16px;
+
+    h4 {
+      font-size: 15px;
+    }
   }
 `

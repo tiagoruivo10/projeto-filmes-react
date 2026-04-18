@@ -14,6 +14,11 @@ const buttonStyles = css`
     color: #ff0000;
     background: #ffffff;
   }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
 `
 
 export const ButtonWhite = styled.button`

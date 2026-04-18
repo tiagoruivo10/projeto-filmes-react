@@ -11,21 +11,30 @@ export const Background = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px;
 `
 
 export const Container = styled.div`
   background: #000;
   width: 60%;
+  max-width: 900px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  padding: 50px;
-  max-width: 1200px;
   position: relative;
+  padding: 50px 20px 20px;
+  border-radius: 12px;
 
   iframe {
     border: none;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 44px 10px 10px;
   }
 `
 

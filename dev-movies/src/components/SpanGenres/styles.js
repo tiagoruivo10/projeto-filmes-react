@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin-top: 30px;
   gap: 10px;
 
@@ -15,6 +16,10 @@ export const Container = styled.div`
     color: #ffffff;
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
     justify-content: center;
   }
 `
